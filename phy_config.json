@@ -16,11 +16,11 @@
         "phy_id_lsw": "0x1c13"
       },
       "rates": {
-        "R_100M": {
+        "R1_100M": {
           "modes": {
-            "100BASE-TX IEEE Test Mode": "0x1",
-            "100BASE-TX ANSI Jitter Test": "0x2",
-            "100BASE-TX ANSI Droop Test": "0x3"
+            "1.100BASE-TX IEEE Test Mode": "0x1",
+            "2.100BASE-TX ANSI Jitter Test": "0x2",
+            "3.100BASE-TX ANSI Droop Test": "0x3"
           },
           "config": {
             "register": "TX_MODE_100M_1000M",
@@ -30,7 +30,7 @@
             "wait_value": "0x8000"
           }
         },
-        "R_1000M": {
+        "R2_1000M": {
           "modes": {
             "Test Mode 1 (Transmitter waveform test)": "0x1",
             "Test Mode 2 (Master transmit jitter test)": "0x2",
@@ -45,16 +45,16 @@
             "wait_value": "0x8000"
           }
         },
-        "R_2G5": {
+        "R3_2G5": {
           "rate_code": 2,
           "modes": {
-            "Master source for slave mode jitter test": "0x1",
-            "Master mode jitter test": "0x2",
-            "Slave mode jitter test": "0x3",
-            "Transmitter distortion test": "0x4",
-            "PSD and power level test": "0x5",
-            "Transmitter Droop test": "0x6",
-            "Pseudo random test mode for BER Monitor": "0x7"
+            "1.Master source for slave mode jitter test": "0x1",
+            "2.Master mode jitter test": "0x2",
+            "3.Slave mode jitter test": "0x3",
+            "4.Transmitter distortion test": "0x4",
+            "5.PSD and power level test": "0x5",
+            "6.Transmitter Droop test": "0x6",
+            "7.Pseudo random test mode for BER Monitor": "0x7"
           },
           "rate_config": {
             "register": "TEST_MODE_RATE",
@@ -83,16 +83,16 @@
             }
           }
         },
-        "R_5G": {
+        "R4_5G": {
           "rate_code": 1,
           "modes": {
-            "Master source for slave mode jitter test": "0x1",
-            "Master mode jitter test": "0x2",
-            "Slave mode jitter test": "0x3",
-            "Transmitter distortion test": "0x4",
-            "PSD and power level test": "0x5",
-            "Transmitter Droop test": "0x6",
-            "Pseudo random test mode for BER Monitor": "0x7"
+            "1.Master source for slave mode jitter test": "0x1",
+            "2.Master mode jitter test": "0x2",
+            "3.Slave mode jitter test": "0x3",
+            "4.Transmitter distortion test": "0x4",
+            "5.PSD and power level test": "0x5",
+            "6.Transmitter Droop test": "0x6",
+            "7.Pseudo random test mode for BER Monitor": "0x7"
           },
           "rate_config": {
             "register": "TEST_MODE_RATE",
@@ -121,16 +121,16 @@
             }
           }
         },
-        "R_10G": {
+        "R5_10G": {
           "rate_code": 0,
           "modes": {
-            "Master source for slave mode jitter test": "0x1",
-            "Master mode jitter test": "0x2",
-            "Slave mode jitter test": "0x3",
-            "Transmitter distortion test": "0x4",
-            "PSD and power level test": "0x5",
-            "Transmitter Droop test": "0x6",
-            "Pseudo random test mode for BER Monitor": "0x7"
+            "1.Master source for slave mode jitter test": "0x1",
+            "2.Master mode jitter test": "0x2",
+            "3.Slave mode jitter test": "0x3",
+            "4.Transmitter distortion test": "0x4",
+            "5.PSD and power level test": "0x5",
+            "6.Transmitter Droop test": "0x6",
+            "7.Pseudo random test mode for BER Monitor": "0x7"
           },
           "rate_config": {
             "register": "TEST_MODE_RATE",
@@ -163,7 +163,7 @@
     },
     "DP83867": {
       "registers": {
-        "TX_MODE_1000M": "phy 0 raw 0x9",
+        "TX_MODE_1000M_REG": "phy 0 raw 0x9",
         "PHY_RESET": "phy 0 raw 0x0 0x8000/0x8000",
         "PHY_DEFAULT_ID": "phy 0 raw 2",
         "PHY_ID_MSW": "phy 0 raw 2",
@@ -175,7 +175,7 @@
         "phy_id_lsw": "0xa231"
       },
       "rates": {
-        "R_1000M": {
+        "R1_100M_1000M": {
           "modes": {
             "Test Mode 1 - Transmit Waveform Test": "0x1",
             "Test Mode 2 - Transmit Jitter Test (Master Mode)": "0x2",
@@ -186,7 +186,7 @@
             "Test Mode 7 - Repetitive {Pulse, 63 zeros}": "0x7"
           },
           "config": {
-            "register": "TX_MODE_1000M",
+            "register": "TX_MODE_1000M_REG",
             "shift": 13,
             "mask": "0xE000",
             "wait_register": "phy 0 raw 0x17",
@@ -197,7 +197,7 @@
     },
     "LAN743X": {
       "registers": {
-        "TX_MODE_1000M": "phy 1 raw 0x09",
+        "TX_MODE_1000M_REG": "phy 1 raw 0x09",
         "PHY_RESET": "phy 1 raw 0x0 0x8000/0x8000",
         "PHY_DEFAULT_ID": "phy 1 raw 2",
         "PHY_ID_MSW": "phy 1 raw 2",
@@ -209,7 +209,7 @@
         "phy_id_lsw": "0x1635"
       },
       "rates": {
-        "R_1000M": {
+        "R1_1000M": {
           "modes": {
             "Test Mode 1 - Transmit Waveform Test": "0x1",
             "Test Mode 2 - Transmit Jitter Test (Master Mode)": "0x2",
@@ -217,7 +217,7 @@
             "Test Mode 4 - Transmit Distortion Test": "0x4"
           },
           "config": {
-            "register": "TX_MODE_1000M",
+            "register": "TX_MODE_1000M_REG",
             "shift": 13,
             "mask": "0xE000",
             "wait_register": "phy 1 raw 0x02",
