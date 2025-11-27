@@ -62,7 +62,8 @@ class PhyExecutor:
         for step in sequence:
             # 1. 获取模板
             action = step.get('action', 'WRITE').upper() # 默认为写入操作
-            tmpl_key = step.get('template', self.default_tmpl_key)
+            # 优先使用步骤中定义的 cmd_template，否则使用默认模板
+            tmpl_key = step.get('cmd', self.default_tmpl_key)
             if tmpl_key not in self.templates:
                 print(f"[ERR] Template '{tmpl_key}' not found in config.")
                 continue
@@ -179,6 +180,30 @@ class PhyExecutor:
                     self.show_menu_recursive(selected, depth + 1)
             else:
                 print("Invalid selection.")
+
+    def reset_device(self):
+        """对当前设备进行复位操作"""
+        print(f"\n[INFO] Resetting device on Bus: {self.bus}, PHY: {self.addr}...")
+        
+        # 查找复位序列，支持多种可能的名称
+        reset_sequence = None
+        if 'test_modes' in self.config and 'General_Ops' in self.config['test_modes']:
+            general_ops = self.config['test_modes']['General_Ops']
+            if 'options' in general_ops:
+                for option in general_ops['options']:
+                    option_name = option.get('name', '')
+                    # 支持多种复位操作名称
+                    if option_name in ['Reset', 'Soft Reset', 'Hardware Reset', 'Reset Device'] and 'sequence' in option:
+                        reset_sequence = option['sequence']
+                        print(f" -> Found reset sequence: {option_name}")
+                        break
+        
+        if reset_sequence:
+            print(" -> Executing device reset sequence...")
+            self.execute_sequence(reset_sequence)
+            print("[INFO] Device reset completed.")
+        else:
+            print("[WARN] No reset sequence found in configuration. Skipping reset.")
 
     def run(self):
         """启动入口"""

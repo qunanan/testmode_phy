@@ -7,6 +7,10 @@
     "marvell_mmd": {
       "format": "mdio {bus} mmd {phy_addr}:{dev_id} raw {reg} {data}",
       "desc": "Marvell Indirect MMD"
+    },
+      "mmd-c22": {
+      "format": "mdio {bus} mmd-c22 {phy_addr}:{dev_id} raw {reg} {data}",
+      "desc": "Clause 45 (XMDIO) PHY addressed over Clause 22 using address PRTAD:DEVAD."
     }
   }
 }

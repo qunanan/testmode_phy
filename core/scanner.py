@@ -122,13 +122,15 @@ class PhyScanner:
                 action = step.get('action', 'WRITE').upper()
                 if action != 'READ':
                     continue
-                    
+
+                tmpl_key = step.get('cmd', template_name)
+    
                 # 获取模板格式
-                if template_name not in templates:
+                if tmpl_key not in templates:
                     print(f"    [!] Template '{template_name}' not found in templates")
                     return 0
                     
-                tmpl_fmt = templates[template_name]['format']
+                tmpl_fmt = templates[tmpl_key]['format']
                 
                 # 构造命令参数
                 cmd_params = {

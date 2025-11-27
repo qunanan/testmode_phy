@@ -84,8 +84,7 @@ def main():
         print("[!] No PHY devices found via mdio.")
         return
 
-    # 3. 列出设备并匹配
-    print("\n[+] Found Devices:")
+    # 3. 列出设备并匹配（不显示，只准备数据）
     valid_devices = []
     
     for i, dev in enumerate(all_devices):
@@ -95,36 +94,53 @@ def main():
         if not cfg:
             cfg = match_device(0, configs) 
             
-        chip_name = cfg['identity']['chip_name'] if cfg else "Unknown/No Config"
-        
-        print(f"  {i+1}. [{chip_name}]")
-        print(f"     Bus: {dev['bus']} | Addr: {dev['addr_hex']} | ID: {hex(dev['phy_id'])}")
-        
         valid_devices.append({
             "hw": dev,
             "cfg": cfg
         })
 
-    # 4. 用户选择
+    # 4. 设备选择和测试循环
     while True:
-        try:
-            sel = input("\nSelect Target Device (Number): ")
-            idx = int(sel) - 1
-            if 0 <= idx < len(valid_devices):
-                target = valid_devices[idx]
-                break
-            else:
-                print("Invalid number.")
-        except ValueError:
-            print("Please enter a number.")
+        # 显示设备列表
+        print("\n[+] Found Devices:")
+        for i, dev in enumerate(valid_devices):
+            chip_name = dev['cfg']['identity']['chip_name'] if dev['cfg'] else "Unknown/No Config"
+            print(f"  {i+1}. [{chip_name}]")
+            print(f"     Bus: {dev['hw']['bus']} | Addr: {dev['hw']['addr_hex']} | ID: {hex(dev['hw']['phy_id'])}")
+        
+        # 用户选择设备
+        while True:
+            try:
+                sel = input("\nSelect Target Device (Number, or 'q' to quit): ")
+                if sel.lower() == 'q':
+                    print("Exiting...")
+                    return
+                    
+                idx = int(sel) - 1
+                if 0 <= idx < len(valid_devices):
+                    target = valid_devices[idx]
+                    break
+                else:
+                    print("Invalid number.")
+            except ValueError:
+                if sel.lower() == 'q':
+                    print("Exiting...")
+                    return
+                print("Please enter a number or 'q' to quit.")
 
-    # 5. 启动执行器
-    if target['cfg']:
-        print(f"\n[*] Starting session for {target['cfg']['identity']['chip_name']}...")
-        executor = PhyExecutor(target['cfg'], common_config, target['hw']['bus'], target['hw']['addr_int'])
-        executor.run()
-    else:
-        print("[ERR] No suitable configuration found for this device. Exiting.")
+        # 5. 启动执行器
+        if target['cfg']:
+            print(f"\n[*] Starting session for {target['cfg']['identity']['chip_name']}...")
+            executor = PhyExecutor(target['cfg'], common_config, target['hw']['bus'], target['hw']['addr_int'])
+            
+            # 运行执行器，执行完成后自动返回设备列表
+            executor.run()
+            
+            # 执行器运行完成后，对设备进行复位
+            executor.reset_device()
+        else:
+            print("[ERR] No suitable configuration found for this device.")
+            continue
 
 if __name__ == "__main__":
     main()
