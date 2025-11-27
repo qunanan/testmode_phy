@@ -9,13 +9,29 @@ CONFIG_DIR = "configs"
 def load_configs():
     """加载 configs 目录下所有的 JSON"""
     configs = []
+    common_config = {}
+    
     if not os.path.exists(CONFIG_DIR):
         os.makedirs(CONFIG_DIR)
         print(f"[WARN] Config directory '{CONFIG_DIR}' created. Please add JSON files.")
-        return configs
+        return configs, common_config
 
+    # 首先加载 common.json
+    common_path = os.path.join(CONFIG_DIR, "common.json")
+    if os.path.exists(common_path):
+        try:
+            with open(common_path, 'r') as fp:
+                common_config = json.load(fp)
+                print(f"[*] Loaded common configuration")
+        except Exception as e:
+            print(f"[ERR] Failed to load {common_path}: {e}")
+    
+    # 然后加载其他配置文件
     files = glob.glob(os.path.join(CONFIG_DIR, "*.json"))
     for f in files:
+        if os.path.basename(f) == "common.json":
+            continue  # 跳过 common.json
+            
         try:
             with open(f, 'r') as fp:
                 cfg = json.load(fp)
@@ -23,7 +39,7 @@ def load_configs():
                     configs.append(cfg)
         except Exception as e:
             print(f"[ERR] Failed to load {f}: {e}")
-    return configs
+    return configs, common_config
 
 def match_device(phy_id, configs):
     """
@@ -52,7 +68,7 @@ def main():
     scanner.check_tool()
     
     print("[*] Loading configurations...")
-    configs = load_configs()
+    configs, common_config = load_configs()
     print(f"[*] Loaded {len(configs)} config files.")
 
     # 2. 扫描硬件
@@ -105,7 +121,7 @@ def main():
     # 5. 启动执行器
     if target['cfg']:
         print(f"\n[*] Starting session for {target['cfg']['identity']['chip_name']}...")
-        executor = PhyExecutor(target['cfg'], target['hw']['bus'], target['hw']['addr_int'])
+        executor = PhyExecutor(target['cfg'], common_config, target['hw']['bus'], target['hw']['addr_int'])
         executor.run()
     else:
         print("[ERR] No suitable configuration found for this device. Exiting.")

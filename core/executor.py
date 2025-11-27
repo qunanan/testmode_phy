@@ -2,13 +2,24 @@ import subprocess
 import time
 
 class PhyExecutor:
-    def __init__(self, config, bus, addr_int):
+    def __init__(self, config, common_config, bus, addr_int):
         self.config = config
         self.bus = bus
         self.addr = addr_int # 整数格式的 PHY 地址
-        self.templates = config.get('cmd_templates', {})
-        # 默认使用第一个定义的模板，防止配置漏写
-        self.default_tmpl_key = next(iter(self.templates)) if self.templates else None
+        
+        # 从 common 配置中获取命令模板
+        self.templates = common_config.get('cmd_templates', {})
+        
+        # 获取当前配置指定的模板名称
+        cmd_template_name = config.get('cmd_template')
+        if cmd_template_name and cmd_template_name in self.templates:
+            self.default_tmpl_key = cmd_template_name
+        else:
+            # 如果没有指定或找不到，使用第一个模板作为默认
+            self.default_tmpl_key = next(iter(self.templates)) if self.templates else None
+            if cmd_template_name and cmd_template_name not in self.templates:
+                print(f"[WARN] Template '{cmd_template_name}' not found in common config. Using default: {self.default_tmpl_key}")
+
 
     def _calc_hex_params(self, val_raw, shift, mask_raw):
         """
@@ -23,10 +34,10 @@ class PhyExecutor:
             
             val_shifted = val << shift
             
-            return f"0x{val_shifted:04x}", f"0x{mask:04x}"
+            return f"0x{val_shifted:04x}/0x{mask:04x}"
         except ValueError as e:
             print(f"Data format error: {e}")
-            return "0x0000", "0x0000"
+            return "0x0000/0x0000"
 
     def _construct_command(self, template_format, params):
         """
@@ -64,8 +75,7 @@ class PhyExecutor:
                 'phy_addr': self.addr,
                 'dev_id': step.get('dev_id', 0),
                 'reg': step.get('reg'),
-                'data': "",
-                'mask': ""
+                'data': ""
             }
             
             # --- 区分读/写操作 ---
@@ -75,9 +85,8 @@ class PhyExecutor:
                 val = step.get('val', 0)
                 mask = step.get('mask', "0xFFFF")
                 
-                data_hex, mask_hex = self._calc_hex_params(val, shift, mask)
+                data_hex = self._calc_hex_params(val, shift, mask)
                 cmd_params['data'] = data_hex
-                cmd_params['mask'] = mask_hex
                 
             elif action == 'READ':
                 # 读取操作：不需要 DATA/MASK 字段，命令由专门的读取模板构造

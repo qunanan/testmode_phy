@@ -1,0 +1,32 @@
+{
+  "cmd_templates": {
+    "std_c22": {
+      "format": "mdio {bus} phy {phy_addr} raw {reg} {data}",
+      "desc": "Standard Clause 22"
+    },
+    "marvell_mmd": {
+      "format": "mdio {bus} mmd {phy_addr}:{dev_id} raw {reg} {data}",
+      "desc": "Marvell Indirect MMD"
+    }
+
+  },
+  "test_modes": {
+    "General_Ops": {
+      "options": [
+        {
+          "name": "Soft Reset",
+          "sequence": [
+            { "action": "WRITE", "reg": "0x00", "val": "1", "shift": 15, "mask": "0x7FFF", "comment": "Bit 15 Reset" }
+          ]
+        },
+        {
+          "name": "Read ID",
+          "sequence": [
+            { "action": "READ", "reg": "0x02", "comment": "Read PHY ID 1" },
+            { "action": "READ", "reg": "0x03", "comment": "Read PHY ID 2" }
+          ]
+        }
+      ]
+    }
+  }
+}

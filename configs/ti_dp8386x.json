@@ -4,34 +4,8 @@
     "phy_id": "0x2000a230",
     "phy_id_mask": "0xFFFFFFF0"
   },
-  "cmd_templates": {
-    "std_c22": {
-      "format": "mdio {bus} phy {phy_addr} raw {reg} {data}/{mask}",
-      "desc": "Standard Clause 22 Write"
-    },
-    "std_c22_read": {
-      "format": "mdio {bus} phy {phy_addr} raw {reg}",
-      "desc": "Standard Clause 22 Read"
-    }
-  },
+  "cmd_template": "std_c22",
   "test_modes": {
-    "General_Ops": {
-      "options": [
-        {
-          "name": "Soft Reset",
-          "sequence": [
-            { "reg": "0", "val": "1", "shift": 15, "mask": "0x7FFF", "comment": "Bit 15 Reset" }
-          ]
-        },
-        {
-          "name": "Read ID",
-          "sequence": [
-            { "action": "READ", "template": "std_c22_read", "reg": "2", "comment": "Read PHY ID 1" },
-            { "action": "READ", "template": "std_c22_read", "reg": "3", "comment": "Read PHY ID 2" }
-          ]
-        }
-      ]
-    },
     "10M_Test_Mode": {
       "options": [
         {
@@ -82,7 +56,7 @@
             { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
             { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
             { "reg": "0x0E", "val": "0x0413", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0413" },
-            { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" }
+            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" }
           ]
         },
         {
@@ -95,7 +69,7 @@
             { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
             { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
             { "reg": "0x0E", "val": "0x0413", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0413" },
-            { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" }
+            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" }
           ]
         }
       ]
@@ -135,12 +109,12 @@
             { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
             { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
             { "reg": "0x0E", "val": "0x0480", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0480" },
-            { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
             { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
             { "reg": "0x0E", "val": "0x01D5", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
             { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
             { "reg": "0x0E", "val": "0xF508", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x01D5 = 0xF508" },
-            { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
             { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
           ]
         },
@@ -155,7 +129,7 @@
             { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
             { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
             { "reg": "0x0E", "val": "0x0480", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0480" },
-            { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
             { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
           ]
         },
@@ -173,7 +147,7 @@
                 { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
                 { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
                 { "reg": "0x0E", "val": "0x0400", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0400" },
-                { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
                 { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
               ]
             },
@@ -188,7 +162,7 @@
                 { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
                 { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
                 { "reg": "0x0E", "val": "0x0420", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0420" },
-                { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
                 { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
               ]
             },
@@ -203,7 +177,7 @@
                 { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
                 { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
                 { "reg": "0x0E", "val": "0x0440", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0440" },
-                { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
                 { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
               ]
             },
@@ -218,7 +192,7 @@
                 { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
                 { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
                 { "reg": "0x0E", "val": "0x0460", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0460" },
-                { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
                 { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
               ]
             },
@@ -233,7 +207,7 @@
                 { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
                 { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
                 { "reg": "0x0E", "val": "0x0480", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0480" },
-                { "action": "READ", "template": "std_c22_read", "reg": "0x0E", "comment": "读取写入数据确认" },
+                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
                 { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
               ]
             }
