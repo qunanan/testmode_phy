@@ -1,0 +1,52 @@
+{
+  "identity": {
+    "chip_name": "Marvell 88Q2112 (Automotive)",
+    "phy_id": "0x002B0980",
+    "phy_id_mask": "0xFFFFFFF0"
+  },
+  "cmd_templates": {
+    "std_c22": {
+      "format": "mdio {bus} phy {phy_addr} raw {reg} {data}/{mask}",
+      "desc": "Standard Clause 22"
+    },
+    "marvell_mmd": {
+      "format": "mdio {bus} mmd {phy_addr}:{dev_id} raw {reg} {data}/{mask}",
+      "desc": "Marvell Indirect MMD"
+    }
+  },
+  "test_modes": {
+    "100M": {
+      "options": [
+        {
+          "name": "100BASE-TX IEEE Test Mode",
+          "sequence": [
+            { "template": "std_c22", "reg": "0", "val": "0x2100", "mask": "0xFFFF", "comment": "Force 100M/Full" },
+            { "template": "std_c22", "reg": "9", "val": "1", "shift": 13, "mask": "0xE000", "comment": "Test Mode 1" }
+          ]
+        }
+      ]
+    },
+    "NG_Multi_Speed": {
+      "options": [
+        {
+          "name": "4. Transmitter distortion test",
+          "sub_modes": [
+            {
+              "name": "Dual Tone #1",
+              "sequence": [
+                { "template": "marvell_mmd", "dev_id": "30", "reg": "100", "val": "1", "comment": "Select Tone 1" },
+                { "template": "marvell_mmd", "dev_id": "30", "reg": "101", "val": "0x0002", "mask": "0x0002", "comment": "Enable TX Gen" }
+              ]
+            },
+            {
+              "name": "Dual Tone #2",
+              "sequence": [
+                { "template": "marvell_mmd", "dev_id": "30", "reg": "100", "val": "2", "comment": "Select Tone 2" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

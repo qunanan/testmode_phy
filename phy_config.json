@@ -5,7 +5,7 @@
         "TX_MODE_100M_1000M": "mmd 0:0x1d raw 0xC501",
         "TX_MODE_10G": "mmd 0:0x1 raw 0x84",
         "TEST_MODE_RATE": "mmd 0:0x1 raw 0xc412",
-        "PHY_RESET": "mmd 0:0x1e raw 0x0 0x8000/0x8000",
+        "PHY_RESET": "mmd 0:0x1e raw 0x0 0x8000/0x7FFF",
         "PHY_DEFAULT_ID": "phy 0 raw 2",
         "PHY_ID_MSW": "mmd 0:0x1e raw 0x2",
         "PHY_ID_LSW": "mmd 0:0x1e raw 0x3"
@@ -16,7 +16,7 @@
         "phy_id_lsw": "0x1c13"
       },
       "rates": {
-        "R1_100M": {
+        "R_100M": {
           "modes": {
             "1.100BASE-TX IEEE Test Mode": "0x1",
             "2.100BASE-TX ANSI Jitter Test": "0x2",
@@ -25,12 +25,12 @@
           "config": {
             "register": "TX_MODE_100M_1000M",
             "shift": 0,
-            "mask": "0x3",
+            "mask": "0xFFFC",
             "wait_register": "mmd 0:0x1e raw 0xc831",
             "wait_value": "0x8000"
           }
         },
-        "R2_1000M": {
+        "R_1000M": {
           "modes": {
             "Test Mode 1 (Transmitter waveform test)": "0x1",
             "Test Mode 2 (Master transmit jitter test)": "0x2",
@@ -40,12 +40,12 @@
           "config": {
             "register": "TX_MODE_100M_1000M",
             "shift": 13,
-            "mask": "0xE000",
+            "mask": "0x1FFF",
             "wait_register": "mmd 0:0x1e raw 0xc831",
             "wait_value": "0x8000"
           }
         },
-        "R3_2G5": {
+        "R_2G5": {
           "rate_code": 2,
           "modes": {
             "1.Master source for slave mode jitter test": "0x1",
@@ -59,12 +59,12 @@
           "rate_config": {
             "register": "TEST_MODE_RATE",
             "shift": 14,
-            "mask": "0xC000"
+            "mask": "0x3FFF"
           },
           "mode_config": {
             "register": "TX_MODE_10G",
             "shift": 13,
-            "mask": "0xFC00"
+            "mask": "0x3FF"
           },
           "frequency_config": {
             "shift": 10,
@@ -83,7 +83,7 @@
             }
           }
         },
-        "R4_5G": {
+        "R_5G": {
           "rate_code": 1,
           "modes": {
             "1.Master source for slave mode jitter test": "0x1",
@@ -97,12 +97,12 @@
           "rate_config": {
             "register": "TEST_MODE_RATE",
             "shift": 14,
-            "mask": "0xC000"
+            "mask": "0x3FFF"
           },
           "mode_config": {
             "register": "TX_MODE_10G",
             "shift": 13,
-            "mask": "0xFC00"
+            "mask": "0x3FF"
           },
           "frequency_config": {
             "shift": 10,
@@ -121,7 +121,7 @@
             }
           }
         },
-        "R5_10G": {
+        "R_10G": {
           "rate_code": 0,
           "modes": {
             "1.Master source for slave mode jitter test": "0x1",
@@ -135,12 +135,12 @@
           "rate_config": {
             "register": "TEST_MODE_RATE",
             "shift": 14,
-            "mask": "0xC000"
+            "mask": "0x3FFF"
           },
           "mode_config": {
             "register": "TX_MODE_10G",
             "shift": 13,
-            "mask": "0xFC00"
+            "mask": "0x3FF"
           },
           "frequency_config": {
             "shift": 10,
@@ -164,7 +164,7 @@
     "DP83867": {
       "registers": {
         "TX_MODE_1000M_REG": "phy 0 raw 0x9",
-        "PHY_RESET": "phy 0 raw 0x0 0x8000/0x8000",
+        "PHY_RESET": "phy 0 raw 0x0 0x8000/0x7FFF",
         "PHY_DEFAULT_ID": "phy 0 raw 2",
         "PHY_ID_MSW": "phy 0 raw 2",
         "PHY_ID_LSW": "phy 0 raw 3"
@@ -175,7 +175,7 @@
         "phy_id_lsw": "0xa231"
       },
       "rates": {
-        "R1_100M_1000M": {
+        "R_100M_1000M": {
           "modes": {
             "Test Mode 1 - Transmit Waveform Test": "0x1",
             "Test Mode 2 - Transmit Jitter Test (Master Mode)": "0x2",
@@ -188,7 +188,7 @@
           "config": {
             "register": "TX_MODE_1000M_REG",
             "shift": 13,
-            "mask": "0xE000",
+            "mask": "0x1FFF",
             "wait_register": "phy 0 raw 0x17",
             "wait_value": "0x200"
           }
@@ -198,7 +198,7 @@
     "LAN743X": {
       "registers": {
         "TX_MODE_1000M_REG": "phy 1 raw 0x09",
-        "PHY_RESET": "phy 1 raw 0x0 0x8000/0x8000",
+        "PHY_RESET": "phy 1 raw 0x0 0x8000/0x7FFF",
         "PHY_DEFAULT_ID": "phy 1 raw 2",
         "PHY_ID_MSW": "phy 1 raw 2",
         "PHY_ID_LSW": "phy 1 raw 3"
@@ -209,7 +209,7 @@
         "phy_id_lsw": "0x1635"
       },
       "rates": {
-        "R1_1000M": {
+        "R_1000M": {
           "modes": {
             "Test Mode 1 - Transmit Waveform Test": "0x1",
             "Test Mode 2 - Transmit Jitter Test (Master Mode)": "0x2",
@@ -219,7 +219,7 @@
           "config": {
             "register": "TX_MODE_1000M_REG",
             "shift": 13,
-            "mask": "0xE000",
+            "mask": "0x1FFF",
             "wait_register": "phy 1 raw 0x02",
             "wait_value": "0x8000"
           }

@@ -251,7 +251,7 @@ configure_mode() {
 
     # 根据速率类型选择不同的配置逻辑
     case "$rate" in
-        R_100M|R_1000M)
+        R_100M|R_1000M|R_100M_1000M)
             echo "配置${rate}测试模式：${mode_name}（值：${mode_value}）"
             
             # 从配置文件获取参数
