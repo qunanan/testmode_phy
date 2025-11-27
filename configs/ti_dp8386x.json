@@ -6,6 +6,23 @@
   },
   "cmd_template": "std_c22",
   "test_modes": {
+    "General_Ops": {
+      "options": [
+        {
+          "name": "Soft Reset",
+          "sequence": [
+            { "action": "WRITE", "reg": "0x00", "val": "0x01", "shift": 15, "mask": "0x7FFF", "comment": "Bit 15 Reset" }
+          ]
+        },
+        {
+          "name": "Read ID",
+          "sequence": [
+            { "action": "READ", "reg": "0x02", "comment": "Read PHY ID 1" },
+            { "action": "READ", "reg": "0x03", "comment": "Read PHY ID 2" }
+          ]
+        }
+      ]
+    },
     "10M_Test_Mode": {
       "options": [
         {

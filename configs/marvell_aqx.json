@@ -1,4 +1,5 @@
 {
+  "config_name": "Marvell AQrate Series PHY",
   "identity": {
     "chip_name": "Marvell AQrate Series PHY",
     "phy_id": "0x31c31c13",
@@ -6,70 +7,19 @@
   },
   "cmd_template": "marvell_mmd",
   "test_modes": {
-    "10M_Test_Mode": {
+    "General_Ops": {
       "options": [
         {
-          "name": "10BASE-T Link Pulse MDI",
+          "name": "Soft Reset",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x01", "shift": 15, "mask": "0x7FFF", "comment": "Bit 15 Reset" }
           ]
         },
         {
-          "name": "10BASE-T Link Pulse MDIX",
+          "name": "Read ID",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
-          ]
-        },
-        {
-          "name": "10BASE-T Standard MDI",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x16", "val": "0xD004", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程以生成流量" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
-          ]
-        },
-        {
-          "name": "10BASE-T Standard MDIX",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x16", "val": "0xD004", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程以生成流量" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
-          ]
-        },
-        {
-          "name": "10BASE-T Harmonic Content MDI",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0x0413", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0413" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" }
-          ]
-        },
-        {
-          "name": "10BASE-T Harmonic Content MDIX",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0x0413", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0413" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" }
+            { "action": "READ", "dev_id": "0x1E", "reg": "0x02", "comment": "Read PHY ID 1" },
+            { "action": "READ", "dev_id": "0x1E", "reg": "0x03", "comment": "Read PHY ID 2" }
           ]
         }
       ]
@@ -77,21 +27,24 @@
     "100M_Test_Mode": {
       "options": [
         {
-          "name": "100BASE-TX Test Mode Standard MDI",
+          "name": "100BASE-TX IEEE Test Mode",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x2100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 100Base-TX 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0001", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX IEEE Test Mode" }
           ]
         },
-                {
-          "name": "100BASE-TX Test Mode Standard MDIX",
+        {
+          "name": "100BASE-TX ANSI Jitter Test Mode",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x2100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 100Base-TX 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0002", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX ANSI Jitter Test Mode" }
+          ]
+        },
+        {
+          "name": "100BASE-TX ANSI Droop Test Mode",
+          "sequence": [
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0003", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX ANSI Droop Test Mode" }
           ]
         }
       ]
@@ -99,116 +52,339 @@
     "1000M_Test_Mode": {
       "options": [
         {
-          "name": "1000BASE-T Test Mode-1",
+          "name": "1000BASE-T Test Mode-1 (Transmitter waveform test)",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-            { "reg": "0x09", "val": "0x3B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 1" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0x0480", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0480" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x01D5", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0xF508", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x01D5 = 0xF508" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0001", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-1" }
           ]
         },
         {
-          "name": "1000BASE-T Test Mode-2",
+          "name": "1000BASE-T Test Mode-2 (Master transmit jitter test)",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-            { "reg": "0x09", "val": "0x5B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 2" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0x0480", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0480" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0002", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-2" }
           ]
         },
         {
-          "name": "1000BASE-T Test Mode-4",
+          "name": "1000BASE-T Test Mode-3 (Slave transmit jitter test)",
+          "sequence": [
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0003", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-3" }
+          ]
+        },
+        {
+          "name": "1000BASE-T Test Mode-4 (Transmitter distortion test)",
+          "sequence": [
+            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0004", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-3" }
+          ]
+        }
+      ]
+    },
+    "10G_Multi_Speed": {
+      "options": [
+        { "name": "2.5G",
           "sub_modes": [
             {
-              "name": "Channel A",
+              "name": "#1 Master source for slave mode jitter test",
               "sequence": [
-                { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-                { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-                { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-                { "reg": "0x09", "val": "0x9B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 4" },
-                { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-                { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-                { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-                { "reg": "0x0E", "val": "0x0400", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0400" },
-                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-                { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0001", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Master source for slave mode jitter test" }
               ]
             },
             {
-              "name": "Channel B",
+              "name": "#2 Master mode jitter test",
               "sequence": [
-                { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-                { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-                { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-                { "reg": "0x09", "val": "0x9B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 4" },
-                { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-                { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-                { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-                { "reg": "0x0E", "val": "0x0420", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0420" },
-                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-                { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0002", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Master mode jitter test" }
               ]
             },
             {
-              "name": "Channel C",
+              "name": "#3 Slave  mode jitter test",
               "sequence": [
-                { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-                { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-                { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-                { "reg": "0x09", "val": "0x9B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 4" },
-                { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-                { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-                { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-                { "reg": "0x0E", "val": "0x0440", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0440" },
-                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-                { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0003", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Slave  mode jitter test" }
               ]
             },
             {
-              "name": "Channel D",
+              "name": "#4 Transmitter distortion test",
+                "sub_modes": [
+                    {
+                        "name": "Dual Tone #1",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0001", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #1" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #2",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0002", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #2" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #3",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #3" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #4",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0005", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #4" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #5",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #5" }
+                        ]
+                    }
+                ]
+            },
+            {
+              "name": "#5 PSD and power level test",
               "sequence": [
-                { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-                { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-                { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-                { "reg": "0x09", "val": "0x9B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 4" },
-                { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-                { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-                { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-                { "reg": "0x0E", "val": "0x0460", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0460" },
-                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-                { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0005", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 PSD and power level test" }
               ]
             },
             {
-              "name": "All Channels",
+              "name": "#6 Transmitter Droop test",
               "sequence": [
-                { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-                { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "1000 Base-T 模式， 自动协商已禁用" },
-                { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "强制 MDI 模式" },
-                { "reg": "0x09", "val": "0x9B00", "shift": 0, "mask": "0x0000", "comment": "测试模式 4" },
-                { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-                { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-                { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-                { "reg": "0x0E", "val": "0x0480", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0480" },
-                { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" },
-                { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" }
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter Droop test" }
+              ]
+            },
+            {
+              "name": "#7 Pseudo random test mode for BER Monitor",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Pseudo random test mode for BER Monitor" }
+              ]
+            }
+          ]
+        },
+        { "name": "5G",
+          "sub_modes": [
+            {
+              "name": "#1 Master source for slave mode jitter test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0001", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Master source for slave mode jitter test" }
+              ]
+            },
+            {
+              "name": "#2 Master mode jitter test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0002", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Master mode jitter test" }
+              ]
+            },
+            {
+              "name": "#3 Slave  mode jitter test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0003", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Slave  mode jitter test" }
+              ]
+            },
+            {
+              "name": "#4 Transmitter distortion test",
+                "sub_modes": [
+                    {
+                        "name": "Dual Tone #1",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0001", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #1" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #2",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0002", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #2" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #3",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #3" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #4",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0005", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #4" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #5",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #5" }
+                        ]
+                    }
+                ]
+            },
+            {
+              "name": "#5 PSD and power level test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0005", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 PSD and power level test" }
+              ]
+            },
+            {
+              "name": "#6 Transmitter Droop test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter Droop test" }
+              ]
+            },
+            {
+              "name": "#7 Pseudo random test mode for BER Monitor",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0001", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Pseudo random test mode for BER Monitor" }
+              ]
+            }
+          ]
+        },
+        { "name": "10G",
+          "sub_modes": [
+            {
+              "name": "#1 Master source for slave mode jitter test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0001", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Master source for slave mode jitter test" }
+              ]
+            },
+            {
+              "name": "#2 Master mode jitter test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0002", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Master mode jitter test" }
+              ]
+            },
+            {
+              "name": "#3 Slave  mode jitter test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0002", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为2.5G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0003", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Slave  mode jitter test" }
+              ]
+            },
+            {
+              "name": "#4 Transmitter distortion test",
+                "sub_modes": [
+                    {
+                        "name": "Dual Tone #1",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0001", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #1" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #2",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0002", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #2" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #3",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #3" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #4",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0005", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #4" }
+                        ]
+                    },
+                    {
+                        "name": "Dual Tone #5",
+                        "sequence": [
+                            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                            { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter distortion test" },
+                            { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 10, "mask": "0xE3FF", "comment": "将 DUT 编程为 Dual Tone #5" }
+                        ]
+                    }
+                ]
+            },
+            {
+              "name": "#5 PSD and power level test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0005", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 PSD and power level test" }
+              ]
+            },
+            {
+              "name": "#6 Transmitter Droop test",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Transmitter Droop test" }
+              ]
+            },
+            {
+              "name": "#7 Pseudo random test mode for BER Monitor",
+              "sequence": [
+                { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+                { "dev_id": "0x1", "reg": "0xc412", "val": "0x0000", "shift": 14, "mask": "0x3FFF", "comment": "将 DUT 编程为 10G Test Mode" },
+                { "dev_id": "0x1", "reg": "0x0084", "val": "0x0006", "shift": 13, "mask": "0x1FFF", "comment": "将 DUT 编程为 Pseudo random test mode for BER Monitor" }
               ]
             }
           ]

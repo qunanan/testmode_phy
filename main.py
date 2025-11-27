@@ -64,13 +64,13 @@ def main():
     print("========================================")
 
     # 1. 准备工作
-    scanner = PhyScanner()
-    scanner.check_tool()
-    
     print("[*] Loading configurations...")
     configs, common_config = load_configs()
     print(f"[*] Loaded {len(configs)} config files.")
 
+    scanner = PhyScanner(configs, common_config)
+    scanner.check_tool()
+    
     # 2. 扫描硬件
     print("\n[*] Scanning Hardware buses...")
     buses = scanner.get_buses()

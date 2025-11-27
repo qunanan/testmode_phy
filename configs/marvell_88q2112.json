@@ -1,19 +1,11 @@
 {
+  "config_name": "Marvell 88Q2112 Automotive PHY",
   "identity": {
     "chip_name": "Marvell 88Q2112 (Automotive)",
     "phy_id": "0x002B0980",
     "phy_id_mask": "0xFFFFFFF0"
   },
-  "cmd_templates": {
-    "std_c22": {
-      "format": "mdio {bus} phy {phy_addr} raw {reg} {data}/{mask}",
-      "desc": "Standard Clause 22"
-    },
-    "marvell_mmd": {
-      "format": "mdio {bus} mmd {phy_addr}:{dev_id} raw {reg} {data}/{mask}",
-      "desc": "Marvell Indirect MMD"
-    }
-  },
+  "cmd_template": "marvell_mmd",
   "test_modes": {
     "100M": {
       "options": [
