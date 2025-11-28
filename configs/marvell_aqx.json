@@ -29,22 +29,22 @@
         {
           "name": "100BASE-TX IEEE Test Mode",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0001", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX IEEE Test Mode" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0001", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX IEEE Test Mode" }
           ]
         },
         {
           "name": "100BASE-TX ANSI Jitter Test Mode",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0002", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX ANSI Jitter Test Mode" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0002", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX ANSI Jitter Test Mode" }
           ]
         },
         {
           "name": "100BASE-TX ANSI Droop Test Mode",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0003", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX ANSI Droop Test Mode" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0003", "shift": 0, "mask": "0x1FFE", "comment": "将 DUT 编程为 100BASE-TX ANSI Droop Test Mode" }
           ]
         }
       ]
@@ -54,29 +54,29 @@
         {
           "name": "1000BASE-T Test Mode-1 (Transmitter waveform test)",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0001", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-1" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0001", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-1" }
           ]
         },
         {
           "name": "1000BASE-T Test Mode-2 (Master transmit jitter test)",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0002", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-2" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0002", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-2" }
           ]
         },
         {
           "name": "1000BASE-T Test Mode-3 (Slave transmit jitter test)",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0003", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-3" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0003", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-3" }
           ]
         },
         {
           "name": "1000BASE-T Test Mode-4 (Transmitter distortion test)",
           "sequence": [
-            { "dev_id": "0x1E", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "dev_id": "0x1E", "reg": "0xC501", "val": "0x0004", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-3" }
+            { "dev_id": "0x1D", "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
+            { "dev_id": "0x1D", "reg": "0xC501", "val": "0x0004", "shift": 13, "mask": "0x1FFE", "comment": "将 DUT 编程为 1000BASE-T Test Mode-3" }
           ]
         }
       ]
