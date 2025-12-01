@@ -63,7 +63,7 @@ class PhyExecutor:
             # 1. 获取模板
             action = step.get('action', 'WRITE').upper() # 默认为写入操作
             # 优先使用步骤中定义的 cmd_template，否则使用默认模板
-            tmpl_key = step.get('cmd', self.default_tmpl_key)
+            tmpl_key = step.get('template', self.default_tmpl_key)
             if tmpl_key not in self.templates:
                 print(f"[ERR] Template '{tmpl_key}' not found in config.")
                 continue
