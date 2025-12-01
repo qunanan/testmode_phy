@@ -84,8 +84,7 @@ class PhyExecutor:
                 # 写入操作：需要计算 DATA/MASK
                 shift = step.get('shift', 0)
                 val = step.get('val', 0)
-                mask = step.get('mask', "0xFFFF")
-                
+                mask = step.get('mask', "0x0000")
                 data_hex = self._calc_hex_params(val, shift, mask)
                 cmd_params['data'] = data_hex
                 

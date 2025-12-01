@@ -1,4 +1,5 @@
 {
+  "config_name": "TI DP8386x Series PHY",
   "identity": {
     "chip_name": "TI DP8386x Series PHY",
     "phy_id": "0x2000a230",

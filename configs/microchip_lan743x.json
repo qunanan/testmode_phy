@@ -1,7 +1,7 @@
 {
-  "config_name": "Micochip LAN743x Series PHY",
+  "config_name": "Microchip LAN743x Series PHY",
   "identity": {
-    "chip_name": "Micochip LAN743x Series PHY",
+    "chip_name": "Microchip LAN743x Series PHY",
     "phy_id": "0x00220000",
     "phy_id_mask": "0xFFFFC000"
   },
@@ -12,7 +12,7 @@
         {
           "name": "Soft Reset",
           "sequence": [
-            { "action": "WRITE", "reg": "0x00", "val": "0x01", "shift": 15, "mask": "0x7FFF", "comment": "Bit 15 Reset" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" }
           ]
         },
         {
@@ -29,65 +29,35 @@
         {
           "name": "10BASE-T Link Pulse MDI",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0100", "comment": "Sets link to 10 Mbps without auto-negotiation" },
+            { "reg": "0x00", "val": "0x4100", "comment": "Enables Loopback, Sets link to 10 Mbps - Full Duplex, Disables Auto-Negotiation" },
+            { "reg": "0x11", "val": "0xA000", "comment": "Forces MDI mode and disables Auto-MDIX " }
           ]
         },
         {
-          "name": "10BASE-T Link Pulse MDIX",
+          "name": "10BASE-T Standard MDI (Pseudo-Random)",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x12", "val": "0x0020", "comment": "Disables Auto-MDIX" },
+            { "reg": "0x00", "val": "0x0100", "comment": "Sets link to 10 Mbps without auto-negotiation" },
+            { "reg": "0x1F", "val": "0x0001", "comment": "Sets to Ethernet Page 1 Access" },
+            { "reg": "0x13", "val": "0x0008", "comment": "Force MDI mode" },
+            { "reg": "0x1D", "val": "0x33FE", "comment": "Resets the packet generation" },
+            { "reg": "0x1D", "val": "0xF3FE", "comment": "Sends continuous packets with random payload (broadcast MAC)" }
           ]
         },
         {
-          "name": "10BASE-T Standard MDI",
+          "name": "10BASE-T Harmonic Content MDI (All Ones)",
           "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x16", "val": "0xD004", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程以生成流量" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
-          ]
-        },
-        {
-          "name": "10BASE-T Standard MDIX",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x16", "val": "0xD004", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程以生成流量" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
-          ]
-        },
-        {
-          "name": "10BASE-T Harmonic Content MDI",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0x0413", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0413" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" }
-          ]
-        },
-        {
-          "name": "10BASE-T Harmonic Content MDIX",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 10Base-T 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x0D", "val": "0x001F", "shift": 0, "mask": "0x3FE0", "comment": "设置间接寻址" },
-            { "reg": "0x0E", "val": "0x0025", "shift": 0, "mask": "0x0000", "comment": "设置间接寻址地址" },
-            { "reg": "0x0D", "val": "0x401F", "shift": 0, "mask": "0x3FE0", "comment": "准备写入寻址地址数据" },
-            { "reg": "0x0E", "val": "0x0413", "shift": 0, "mask": "0x0000", "comment": "写寄存器0x0025 = 0x0413" },
-            { "action": "READ", "template": "std_c22", "reg": "0x0E", "comment": "读取写入数据确认" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x12", "val": "0x0020", "comment": "Disables Auto-MDIX" },
+            { "reg": "0x00", "val": "0x0100", "comment": "Sets link to 10 Mbps without auto-negotiation" },
+            { "reg": "0x1F", "val": "0x0001", "comment": "Sets to Ethernet Page 1 Access" },
+            { "reg": "0x13", "val": "0x0008", "comment": "Force MDI mode" },
+            { "reg": "0x1E", "val": "0xFFFF", "comment": "Sets payload to all ones (FFFF per 16 bits)" },
+            { "reg": "0x1D", "val": "0x33FC", "comment": "Resets payload to all ones pattern" },
+            { "reg": "0x1D", "val": "0xF3FC", "comment": "Sends continuous all ones packets (broadcast MAC)" }
           ]
         }
       ]
@@ -97,19 +67,9 @@
         {
           "name": "100BASE-TX Test Mode Standard MDI",
           "sequence": [
-            { "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "关闭自协商并强制为1000Mbps全双工" },
-            { "reg": "0x10", "val": "0x5008", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDI" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
-          ]
-        },
-                {
-          "name": "100BASE-TX Test Mode Standard MDIX",
-          "sequence": [
-            { "reg": "0x1F", "val": "0x8000", "shift": 0, "mask": "0x0000", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x2100", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为 100Base-TX 模式" },
-            { "reg": "0x10", "val": "0x5028", "shift": 0, "mask": "0x0000", "comment": "将 DUT 编程为强制 MDIX" },
-            { "reg": "0x1F", "val": "0x4000", "shift": 0, "mask": "0x0000", "comment": "重新启动 PHY" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x2100", "comment": "Sets link to 100 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x11", "val": "0xA000", "comment": "Forces MDI mode and disables Auto-MDIX" }
           ]
         }
       ]
@@ -119,33 +79,33 @@
         {
           "name": "Test Mode 1 - Transmit waveform test",
           "sequence": [
-            { "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "关闭自协商并强制为1000Mbps全双工" },
-            { "reg": "0x09", "val": "0x0001", "shift": 13, "mask": "0x1FFF", "comment": "Test Mode 1 - Transmit waveform test" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x3B00", "comment": "Test Mode 1 – Transmit Waveform Test" }
           ]
         },
         {
           "name": "Test Mode 2 - Transmit jitter test in Master mode",
           "sequence": [
-            { "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "关闭自协商并强制为1000Mbps全双工" },
-            { "reg": "0x09", "val": "0x0002", "shift": 13, "mask": "0x1FFF", "comment": "Test Mode 2 - Transmit jitter test in Master mode" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x5B00", "comment": "Test Mode 2 – Transmit Jitter Test in Master mode" }
           ]
         },
         {
           "name": "Test Mode 3 - Transmit jitter test in Slave mode",
           "sequence": [
-            { "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "关闭自协商并强制为1000Mbps全双工" },
-            { "reg": "0x09", "val": "0x0003", "shift": 13, "mask": "0x1FFF", "comment": "Test Mode 3 - Transmit jitter test in Slave mode" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x7300", "comment": "Test Mode 3 – Transmit Jitter Test in Slave mode" }
           ]
         },
         {
           "name": "Test Mode 4 - Transmitter distortion test",
           "sequence": [
-            { "reg": "0x00", "val": "0x8000", "shift": 0, "mask": "0x7FFF", "comment": "Bit 15 Reset" },
-            { "reg": "0x00", "val": "0x0140", "shift": 0, "mask": "0x0000", "comment": "关闭自协商并强制为1000Mbps全双工" },
-            { "reg": "0x09", "val": "0x0004", "shift": 13, "mask": "0x1FFF", "comment": "Test Mode 4 - Transmitter distortion test" }
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x9B00", "comment": "Test Mode 4 – Transmitter Distortion Test" }
           ]
         }
       ]
