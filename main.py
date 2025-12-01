@@ -1,4 +1,5 @@
 import os
+import sys
 import glob
 import json
 from core.scanner import PhyScanner
@@ -59,9 +60,14 @@ def match_device(phy_id, configs):
     return None
 
 def main():
+    # 检查命令行参数
+    debug_mode = '--debug' in sys.argv
+    
     print("========================================")
     print("    Ethernet PHY Auto-Tester v2.0")
     print("========================================")
+    if debug_mode:
+        print("[DEBUG] Debug mode enabled")
 
     # 1. 准备工作
     print("[*] Loading configurations...")
@@ -131,7 +137,7 @@ def main():
         # 5. 启动执行器
         if target['cfg']:
             print(f"\n[*] Starting session for {target['cfg']['identity']['chip_name']}...")
-            executor = PhyExecutor(target['cfg'], common_config, target['hw']['bus'], target['hw']['addr_int'])
+            executor = PhyExecutor(target['cfg'], common_config, target['hw']['bus'], target['hw']['addr_int'], debug_mode)
             
             # 运行执行器，执行完成后自动返回设备列表
             executor.run()

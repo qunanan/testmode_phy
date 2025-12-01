@@ -2,10 +2,11 @@ import subprocess
 import time
 
 class PhyExecutor:
-    def __init__(self, config, common_config, bus, addr_int):
+    def __init__(self, config, common_config, bus, addr_int, debug_mode=False):
         self.config = config
         self.bus = bus
         self.addr = addr_int # 整数格式的 PHY 地址
+        self.debug_mode = debug_mode  # 调试模式标志
         
         # 从 common 配置中获取命令模板
         self.templates = common_config.get('cmd_templates', {})
@@ -55,11 +56,87 @@ class PhyExecutor:
         # 3. 添加 sudo
         return ["sudo"] + cmd_list
 
+    def _check_inprogress(self):
+        """检查操作是否完成，根据配置中的check_inprogress设置"""
+        check_config = self.config.get('check_inprogress')
+        if not check_config:
+            return True  # 如果没有配置，直接返回True
+        
+        if self.debug_mode:
+            print(f" -> Checking operation progress...")
+        
+        # 获取读取模板
+        tmpl_key = check_config.get('template', self.default_tmpl_key)
+        if tmpl_key not in self.templates:
+            print(f"[ERR] Template '{tmpl_key}' not found for check_inprogress.")
+            return True  # 如果模板不存在，跳过检查
+        
+        tmpl_fmt = self.templates[tmpl_key]['format']
+        
+        # 构造读取命令参数
+        cmd_params = {
+            'bus': self.bus,
+            'phy_addr': self.addr,
+            'dev_id': check_config.get('dev_id', 0),
+            'reg': check_config.get('reg'),
+            'data': ""
+        }
+        
+        # 构造完整的命令列表
+        full_cmd_list = self._construct_command(tmpl_fmt, cmd_params)
+
+        completed_value = check_config.get('completed_value')
+        comment = check_config.get('comment', '')
+
+        if not completed_value:
+            print("[WARN] No completed_value specified in check_inprogress. Skipping check.")
+            return True
+        
+        max_attempts = 100  # 最大尝试次数，防止无限循环
+        attempt = 0
+        
+        while attempt < max_attempts:
+            try:
+                result = subprocess.run(full_cmd_list, check=True, capture_output=True, text=True)
+                if self.debug_mode:
+                    print(f" -> Exec: {' '.join(full_cmd_list):<50} # {comment}")
+                read_val = result.stdout.strip()
+                
+                # 将读取的值和目标值都转换为整数进行比较
+                try:
+                    read_int = int(str(read_val), 0)
+                    target_int = int(str(completed_value), 0)
+                    
+                    if read_int == target_int:
+                        if self.debug_mode:
+                            print(f"    [CHECK] Operation completed. Value: {read_val}")
+                        return True
+                    else:
+                        if self.debug_mode:
+                            print(f"    [CHECK] Operation in progress. Current: {read_val}, Target: {completed_value}")
+                        time.sleep(0.1)  # 等待100ms
+                        attempt += 1
+                        
+                except ValueError:
+                    print(f"[ERR] Cannot compare values: read='{read_val}', target='{completed_value}'")
+                    return True
+                    
+            except subprocess.CalledProcessError as e:
+                print(f"[ERR] Check command failed: {e}")
+                return True
+        
+        print(f"[WARN] Operation check timeout after {max_attempts} attempts. Proceeding anyway.")
+        return True
+
     def execute_sequence(self, sequence):
         """执行一系列寄存器操作"""
         print(f"\n[INFO] Starting sequence execution on Bus: {self.bus}, PHY: {self.addr}...")
 
         for step in sequence:
+            # 在执行每个步骤之前检查操作进度
+            if not self._check_inprogress():
+                print("[WARN] Operation check failed, but continuing...")
+            
             # 1. 获取模板
             action = step.get('action', 'WRITE').upper() # 默认为写入操作
             # 优先使用步骤中定义的 cmd_template，否则使用默认模板
@@ -100,7 +177,8 @@ class PhyExecutor:
             full_cmd_list = self._construct_command(tmpl_fmt, cmd_params)
 
             comment = step.get('comment', '')
-            print(f" -> Exec: {' '.join(full_cmd_list):<50} # {comment}")
+            if self.debug_mode:
+                print(f" -> Exec: {' '.join(full_cmd_list):<50} # {comment}")
             
             # 5. 调用系统命令
             try:
