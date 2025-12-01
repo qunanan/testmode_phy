@@ -87,7 +87,10 @@ class PhyExecutor:
 
         completed_value = check_config.get('completed_value')
         comment = check_config.get('comment', '')
-
+        mask_raw = check_config.get('mask', '0x0000')
+        mask = int(str(mask_raw), 0)
+        if self.debug_mode:
+            print(f"    [CHECK] Looking for value: {completed_value} (mask: {mask_raw})")
         if not completed_value:
             print("[WARN] No completed_value specified in check_inprogress. Skipping check.")
             return True
@@ -107,7 +110,7 @@ class PhyExecutor:
                     read_int = int(str(read_val), 0)
                     target_int = int(str(completed_value), 0)
                     
-                    if read_int == target_int:
+                    if read_int & mask == target_int:
                         if self.debug_mode:
                             print(f"    [CHECK] Operation completed. Value: {read_val}")
                         return True
@@ -133,10 +136,6 @@ class PhyExecutor:
         print(f"\n[INFO] Starting sequence execution on Bus: {self.bus}, PHY: {self.addr}...")
 
         for step in sequence:
-            # 在执行每个步骤之前检查操作进度
-            if not self._check_inprogress():
-                print("[WARN] Operation check failed, but continuing...")
-            
             # 1. 获取模板
             action = step.get('action', 'WRITE').upper() # 默认为写入操作
             # 优先使用步骤中定义的 cmd_template，否则使用默认模板
@@ -189,6 +188,11 @@ class PhyExecutor:
                 if action == 'READ':
                     read_val = result.stdout.strip()
                     print(f"    [RESULT] Register {step.get('reg')} value: {read_val}")
+                # 在执行每个步骤之后检查操作进度
+                if not self._check_inprogress():
+                    print("[WARN] Operation check failed, but continuing...")
+            
+
             except subprocess.CalledProcessError as e:
                 print(f"[FATAL] Command failed with error code {e.returncode}!")
                 print(f"  STDERR: {e.stderr.strip()}")
