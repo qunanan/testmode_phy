@@ -1,0 +1,114 @@
+{
+  "config_name": "Microchip LAN78xx Series PHY",
+  "identity": {
+    "chip_name": "Microchip LAN78xx Series PHY",
+    "phy_id": "0x0007c130",
+    "phy_id_mask": "0xFFFFFFF0"
+  },
+  "cmd_template": "std_c22",
+  "test_modes": {
+    "General_Ops": {
+      "options": [
+        {
+          "name": "Soft Reset",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" }
+          ]
+        },
+        {
+          "name": "Read ID",
+          "sequence": [
+            { "action": "READ", "reg": "0x02", "comment": "Read PHY ID 1" },
+            { "action": "READ", "reg": "0x03", "comment": "Read PHY ID 2" }
+          ]
+        }
+      ]
+    },
+    "10M_Test_Mode": {
+      "options": [
+        {
+          "name": "10BASE-T Link Pulse MDI",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0100", "comment": "Sets link to 10 Mbps without auto-negotiation" }
+          ]
+        },
+        {
+          "name": "10BASE-T Standard MDI (Pseudo-Random)",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x12", "val": "0x0020", "comment": "Disables Auto-MDIX" },
+            { "reg": "0x00", "val": "0x0100", "comment": "Sets link to 10 Mbps without auto-negotiation" },
+            { "reg": "0x1F", "val": "0x0001", "comment": "Sets to Ethernet Page 1 Access" },
+            { "reg": "0x13", "val": "0x0008", "comment": "Force MDI mode" },
+            { "reg": "0x1D", "val": "0x33FE", "comment": "Resets the packet generation" },
+            { "reg": "0x1D", "val": "0xF3FE", "comment": "Sends continuous packets with random payload (broadcast MAC)" }
+          ]
+        },
+        {
+          "name": "10BASE-T Harmonic Content MDI (All Ones)",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x12", "val": "0x0020", "comment": "Disables Auto-MDIX" },
+            { "reg": "0x00", "val": "0x0100", "comment": "Sets link to 10 Mbps without auto-negotiation" },
+            { "reg": "0x1F", "val": "0x0001", "comment": "Sets to Ethernet Page 1 Access" },
+            { "reg": "0x13", "val": "0x0008", "comment": "Force MDI mode" },
+            { "reg": "0x1E", "val": "0xFFFF", "comment": "Sets payload to all ones (FFFF per 16 bits)" },
+            { "reg": "0x1D", "val": "0x33FC", "comment": "Resets payload to all ones pattern" },
+            { "reg": "0x1D", "val": "0xF3FC", "comment": "Sends continuous all ones packets (broadcast MAC)" }
+          ]
+        }
+      ]
+    },
+    "100M_Test_Mode": {
+      "options": [
+        {
+          "name": "100BASE-TX Test Mode Standard MDI",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x12", "val": "0x0020", "comment": "Disables Auto-MDIX" },
+            { "reg": "0x00", "val": "0x2100", "comment": "Sets link to 100 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x1f", "val": "0x0001", "comment": "Sets to Ethernet Page 1 Access" },
+            { "reg": "0x13", "val": "0x0008", "comment": "Forces MDI mode" }
+          ]
+        }
+      ]
+    },
+    "1000M_Test_Mode": {
+      "options": [
+        {
+          "name": "Test Mode 1 - Transmit waveform test",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x3B00", "comment": "Test Mode 1 – Transmit Waveform Test" }
+          ]
+        },
+        {
+          "name": "Test Mode 2 - Transmit jitter test in Master mode",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x5B00", "comment": "Test Mode 2 – Transmit Jitter Test in Master mode" }
+          ]
+        },
+        {
+          "name": "Test Mode 3 - Transmit jitter test in Slave mode",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x7300", "comment": "Test Mode 3 – Transmit Jitter Test in Slave mode" }
+          ]
+        },
+        {
+          "name": "Test Mode 4 - Transmitter distortion test",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x9B00", "comment": "Test Mode 4 – Transmitter Distortion Test" }
+          ]
+        }
+      ]
+    }
+  }
+}

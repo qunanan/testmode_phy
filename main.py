@@ -52,8 +52,7 @@ def match_device(phy_id, configs):
         try:
             target_id = int(ident['phy_id'], 0)
             mask = int(ident['phy_id_mask'], 0)
-            
-            if (phy_id & mask) == target_id:
+            if (phy_id & mask) == target_id & mask:
                 return cfg
         except:
             continue

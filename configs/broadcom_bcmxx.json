@@ -1,0 +1,75 @@
+{
+  "config_name": "Broadcom BCMxx Series PHY",
+  "identity": {
+    "chip_name": "Broadcom BCMxx Series PHY",
+    "phy_id": "0x600d84a2",
+    "phy_id_mask": "0xFFFF0po000"
+  },
+  "cmd_template": "std_c22",
+  "test_modes": {
+    "General_Ops": {
+      "options": [
+        {
+          "name": "Soft Reset",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" }
+          ]
+        },
+        {
+          "name": "Read ID",
+          "sequence": [
+            { "action": "READ", "reg": "0x02", "comment": "Read PHY ID 1" },
+            { "action": "READ", "reg": "0x03", "comment": "Read PHY ID 2" }
+          ]
+        }
+      ]
+    },
+    "100M_Test_Mode": {
+      "options": [
+        {
+          "name": "100BASE-TX Test Mode Standard MDI",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x2100", "comment": "Sets link to 100 Mbps - Full Duplex, Disable Auto-Negotiation" }
+          ]
+        }
+      ]
+    },
+    "1000M_Test_Mode": {
+      "options": [
+        {
+          "name": "Test Mode 1 - Transmit waveform test",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x3F00", "comment": "Test Mode 1 – Transmit Waveform Test" }
+          ]
+        },
+        {
+          "name": "Test Mode 2 - Transmit jitter test in Master mode",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x5F00", "comment": "Test Mode 2 – Transmit Jitter Test in Master mode" }
+          ]
+        },
+        {
+          "name": "Test Mode 3 - Transmit jitter test in Slave mode",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x7F00", "comment": "Test Mode 3 – Transmit Jitter Test in Slave mode" }
+          ]
+        },
+        {
+          "name": "Test Mode 4 - Transmitter distortion test",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Bit 15 Reset" },
+            { "reg": "0x00", "val": "0x0140", "comment": "Force 1000 Mbps - Full Duplex, Disable Auto-Negotiation" },
+            { "reg": "0x09", "val": "0x9F00", "comment": "Test Mode 4 – Transmitter Distortion Test" }
+          ]
+        }
+      ]
+    }
+  }
+}
