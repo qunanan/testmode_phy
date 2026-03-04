@@ -3,7 +3,7 @@
   "identity": {
     "chip_name": "Broadcom BCMxx Series PHY",
     "phy_id": "0x600d84a2",
-    "phy_id_mask": "0xFFFF0po000"
+    "phy_id_mask": "0xFFFF0000"
   },
   "cmd_template": "std_c22",
   "test_modes": {
