@@ -1,0 +1,100 @@
+{
+  "config_name": "Realtek RTL8211 Series PHY",
+  "identity": {
+    "chip_name": "Realtek RTL8211 Series PHY",
+    "phy_id": "0x001cc910",
+    "phy_id_mask": "0xFFFFFFF0"
+  },
+  "cmd_template": "std_c22",
+  "test_modes": {
+    "General_Ops": {
+      "options": [
+        {
+          "name": "Soft Reset",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "BMCR Reset" }
+          ]
+        },
+        {
+          "name": "Read ID",
+          "sequence": [
+            { "action": "READ", "reg": "0x02", "comment": "Read PHY ID1" },
+            { "action": "READ", "reg": "0x03", "comment": "Read PHY ID2" }
+          ]
+        }
+      ]
+    },
+    "10M_Test_Mode": {
+      "options": [
+        {
+          "name": "10BASE-T Link Pulse MDI",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Reset before mode set" },
+            { "reg": "0x00", "val": "0x0100", "comment": "10M, Full Duplex, Auto-Neg Off" }
+          ]
+        },
+        {
+          "name": "10BASE-T Standard MDI",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Reset before mode set" },
+            { "reg": "0x00", "val": "0x4100", "comment": "10M Loopback test" }
+          ]
+        }
+      ]
+    },
+    "100M_Test_Mode": {
+      "options": [
+        {
+          "name": "100BASE-TX Test Mode Standard MDI",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Reset before mode set" },
+            { "reg": "0x00", "val": "0x2100", "comment": "100M, Full Duplex, Auto-Neg Off" },
+            { "reg": "0x1f", "val": "0x0007", "comment": "Select extension page" },
+            { "reg": "0x10", "val": "0x5008", "comment": "Force MDI mode" }
+          ]
+        },
+        {
+          "name": "100BASE-TX Test Mode Standard MDIX",
+          "sequence": [
+            { "reg": "0x00", "val": "0x8000", "comment": "Reset before mode set" },
+            { "reg": "0x00", "val": "0x2100", "comment": "100M, Full Duplex, Auto-Neg Off" },
+            { "reg": "0x1f", "val": "0x0007", "comment": "Select extension page" },
+            { "reg": "0x10", "val": "0x5028", "comment": "Force MDIX mode" }
+          ]
+        }
+      ]
+    },
+    "1000M_Test_Mode": {
+      "options": [
+        {
+          "name": "1000BASE-T Test Mode-1",
+          "sequence": [
+            { "reg": "0x00", "val": "0x0140", "comment": "1000M, Full Duplex, Auto-Neg Off" },
+            { "reg": "0x09", "val": "0x3B00", "comment": "Test Mode 1" }
+          ]
+        },
+        {
+          "name": "1000BASE-T Test Mode-2",
+          "sequence": [
+            { "reg": "0x00", "val": "0x0140", "comment": "1000M, Full Duplex, Auto-Neg Off" },
+            { "reg": "0x09", "val": "0x5B00", "comment": "Test Mode 2" }
+          ]
+        },
+        {
+          "name": "1000BASE-T Test Mode-3",
+          "sequence": [
+            { "reg": "0x00", "val": "0x0140", "comment": "1000M, Full Duplex, Auto-Neg Off" },
+            { "reg": "0x09", "val": "0x7300", "comment": "Test Mode 3" }
+          ]
+        },
+        {
+          "name": "1000BASE-T Test Mode-4",
+          "sequence": [
+            { "reg": "0x00", "val": "0x0140", "comment": "1000M, Full Duplex, Auto-Neg Off" },
+            { "reg": "0x09", "val": "0x9B00", "comment": "Test Mode 4" }
+          ]
+        }
+      ]
+    }
+  }
+}
